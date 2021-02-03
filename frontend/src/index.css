@@ -1,0 +1,36 @@
+body {
+ background-color: rgb(245, 245, 245);
+ 
+}
+main {
+  min-height: 90vh;
+}
+h3 {
+  padding: 1em 0;
+}
+h1 {
+  font-size: 1.4em;
+  padding: 0.1em;
+}
+.container {
+  margin: 80px auto 0 auto;
+  max-width: 1200px;
+}
+
+.nav-container {
+  margin: auto;
+}
+a {
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  
+    
+  
+}
+/*
+body {
+ font-size: 15px;
+}
+*/
