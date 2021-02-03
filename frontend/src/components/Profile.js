@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails, userUpdateProfileReset } from "../actions/userAction";
+import { getUserDetails } from "../actions/userAction";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
@@ -71,8 +71,8 @@ const styles = {
 };
 
 dayjs.extend(relativeTime);
-const Profile = ({ classes, history }) => {
-  const [nameHandler, setNameHandler] = useState("");
+const Profile = ({ classes}) => {
+ 
   const [uploading, setUploading] = useState(false);
   const [image, setImage] = useState("");
 
@@ -82,14 +82,14 @@ const Profile = ({ classes, history }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
+/*
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const {
     success,
     loading: loadingUserUpdateProfile,
     error: errorUserUpdateProfile,
   } = userUpdateProfile;
-
+*/
   useEffect(() => {
     /* if (!userInfo) {
       history.push("/login");

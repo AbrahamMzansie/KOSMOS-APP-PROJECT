@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MuiAlert from "@material-ui/lab/Alert";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -10,7 +10,7 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import Badge from "@material-ui/core/Badge";
 import StreamDialog from "../components/StreamDialog";
-import Progress from "../components/Progress";
+
 import { likeStream, unlikeStream } from "../actions/streamActions";
 
 const styles = {
@@ -33,15 +33,20 @@ const StreamFooter = ({ showScreamDetailIcon, stream, index, classes }) => {
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
 
-  const streamList = useSelector((state) => state.streamList);
-  const { errorLikeStream } = streamList;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const dispatch = useDispatch();
   useEffect(() => {}, [dispatch]);
   const likeStreamHandler = (streamID) => {
-    dispatch(likeStream(streamID, index));
+    if (userInfo) {
+      dispatch(likeStream(streamID, index));
+    }
   };
   const unLikeStreamHandler = (streamID) => {
-    dispatch(unlikeStream(streamID, index));
+    if (userInfo) {
+      dispatch(unlikeStream(streamID, index));
+    }
   };
   const likedStream = () => {
     if (user) {
@@ -59,9 +64,9 @@ const StreamFooter = ({ showScreamDetailIcon, stream, index, classes }) => {
     <>
       {user ? (
         <>
-        {stream.errorLike &&(
-          <MuiAlert severity="error">{stream.errorLike}</MuiAlert>
-        )}
+          {stream.errorLike && (
+            <MuiAlert severity="error">{stream.errorLike}</MuiAlert>
+          )}
           {likedStream() ? (
             <>
               {stream.loadingLike ? (
@@ -71,7 +76,7 @@ const StreamFooter = ({ showScreamDetailIcon, stream, index, classes }) => {
               ) : (
                 <Tooltip title="unlike a post" placement="top">
                   <IconButton
-                    onClick={() => unLikeStreamHandler(stream._id , index)}
+                    onClick={() => unLikeStreamHandler(stream._id, index)}
                     className={classes.button}
                   >
                     <Badge
@@ -87,7 +92,6 @@ const StreamFooter = ({ showScreamDetailIcon, stream, index, classes }) => {
             </>
           ) : (
             <>
-            
               {stream.loadingLike ? (
                 <div className={classes.progress}>
                   <CircularProgress color="primary" size={30} />
@@ -111,7 +115,7 @@ const StreamFooter = ({ showScreamDetailIcon, stream, index, classes }) => {
             </>
           )}
           {!stream.loadingLike && (
-            <Tooltip title="add comment" placement="top">
+            <Tooltip title="List of comments" placement="top">
               <IconButton className={classes.button}>
                 <Badge badgeContent={stream.commentCount} color="secondary">
                   <ChatIcon color="primary"></ChatIcon>

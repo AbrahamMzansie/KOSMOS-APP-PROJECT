@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { Fragment } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +10,7 @@ import Avatar from "@material-ui/core/Avatar";
 import DeleteComment from "./DeleteComment";
 import Progress from "../components/Progress";
 import MuiAlert from "@material-ui/lab/Alert";
-import EditIcon from '@material-ui/icons/Edit';
+
 
 const styles = {
   commentImage: {
