@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails, userUpdateProfileReset } from "../actions/userAction";
+import { useSelector } from "react-redux";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
@@ -10,17 +9,11 @@ import Typography from "@material-ui/core/Typography";
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import CalendarToday from "@material-ui/icons/CalendarToday";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import MuiAlert from "@material-ui/lab/Alert";
-import Tooltip from "@material-ui/core/Tooltip";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import axios from "axios";
 import Progress from "../components/Progress";
-
-import EditProfile from "../components/EditProfile";
 
 const styles = {
   paper: {
@@ -71,70 +64,9 @@ const styles = {
 };
 
 dayjs.extend(relativeTime);
-const Profile = ({ classes, history }) => {
-  const [nameHandler, setNameHandler] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [image, setImage] = useState("");
-
-  const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
-
+const StaticProfile = ({ classes, user, loading, error }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const {
-    success,
-    loading: loadingUserUpdateProfile,
-    error: errorUserUpdateProfile,
-  } = userUpdateProfile;
-
-  useEffect(() => {
-    /* if (!userInfo) {
-      history.push("/login");
-    } else {*/
-      //////////////////////////////////////////////////////
-  //  if (!user || !userInfo || user._id !== userInfo._id || !user.nameHandler) {
-   //   dispatch(userUpdateProfileReset());
-   //   dispatch(getUserDetails("profile"));
-  //  } else {
-  //    setNameHandler(user.nameHandler);
- //   }
-    // }
-    ////////////////////////////////////////////////////////
-  }, [/*history, dispatch, userInfo, success, user*/]);
-
-  const pictureEditHandler = () => {
-    const fileInput = document.getElementById("imageInput");
-    fileInput.click();
-  };
-  const handlerImageChanger = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-
-    setUploading(true);
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const { data } = await axios.post(
-        `/api/upload/${user._id}`,
-        formData,
-        config
-      );
-      setImage(data);
-      setUploading(false);
-      dispatch(getUserDetails("profile"));
-    } catch (error) {
-      console.error(error);
-      setUploading(false);
-    }
-  };
-
   return (
     <>
       {loading ? (
@@ -193,16 +125,7 @@ const Profile = ({ classes, history }) => {
                             hidden="hidden"
                             type="file"
                             id="imageInput"
-                            onChange={handlerImageChanger}
                           ></input>
-                          <Tooltip placement="top" title="edit profile picture">
-                            <IconButton
-                              className="button"
-                              onClick={pictureEditHandler}
-                            >
-                              <EditIcon color="primary"></EditIcon>
-                            </IconButton>
-                          </Tooltip>
                         </div>
                         <hr />
                         <div className="profile-details">
@@ -245,7 +168,6 @@ const Profile = ({ classes, history }) => {
                             Joined {dayjs(user.createdAt).format("MMM YYYY")}
                           </span>
                         </div>
-                        <EditProfile user={user} />
                       </div>
                     </Paper>
                   ) : (
@@ -282,6 +204,6 @@ const Profile = ({ classes, history }) => {
     </>
   );
 };
-Profile.prototype = {};
+StaticProfile.prototype = {};
 
-export default withStyles(styles)(Profile);
+export default withStyles(styles)(StaticProfile);

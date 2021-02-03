@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { createComment } from "../actions/streamActions";
@@ -32,15 +33,19 @@ const CommentForm = ({ stream, classes }) => {
   const [body, setBody] = useState("");
   const dispatch = useDispatch();
   const streamData = useSelector((state) => state.streamList);
-  const { loadingCreateComment, errorCreateComment, page, pages } = streamData;
+  const { loadingCreateComment } = streamData;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const post = {
     body: body,
   };
   const createCommentHandler = (e) => {
     e.preventDefault();
+    if(userInfo){
     dispatch(createComment(stream._id, post));
     setBody("");
+  }
   };
   return (
     <>
@@ -52,7 +57,7 @@ const CommentForm = ({ stream, classes }) => {
           rows="3"
             name="body"
             type="text"
-            label="Comment on screem"
+            label="Make Your Comment"
             placeholder="Enter Your Comment"
             value={body}
             onChange={(e) => setBody(e.target.value)}
@@ -61,7 +66,16 @@ const CommentForm = ({ stream, classes }) => {
           {}
           {loadingCreateComment ? (
             <Progress size={40}></Progress>
-          ) : (
+          ) : !userInfo ? (<Button
+            className={classes.button}
+            color="primary"
+            type="submit"
+            variant="contained"
+            component={Link}
+            to="/signin"
+          >
+            Login to Comment
+          </Button>) : (
             <Button
               className={classes.button}
               color="primary"

@@ -7,6 +7,11 @@ router
   .route("/")
   .get(streamControllers.getStreams)
   .put(authMiddleware.protect, streamControllers.createStream);
+
+  router
+  .route("/:userHandler/user")
+  .get(streamControllers.getUserStreams)
+  
 router
   .route("/:id")
   .delete(authMiddleware.protect, streamControllers.deleteStream)

@@ -70,7 +70,7 @@ const Comments = ({ stream, index, comments, classes, userHandle }) => {
                         variant="h5"
                         color="primary"
                         component={Link}
-                        to={`/users/${comment.user.nameHandler}`}
+                        to={`/user/${comment.user.nameHandler}`}
                       >
                         @{comment.user.nameHandler}
                       </Typography>

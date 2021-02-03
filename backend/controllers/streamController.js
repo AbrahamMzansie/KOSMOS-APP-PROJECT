@@ -1,7 +1,6 @@
 const Stream = require("../models/streamModels");
 const User = require("../models/userModels");
 const asyncHandler = require("express-async-handler");
-const { findById } = require("../models/streamModels");
 
 //@desc : FETCH ALL STREAMS
 //@route : GET /api/streams
@@ -19,6 +18,23 @@ const getStreams = asyncHandler(async (req, res) => {
     .skip(pageSize * (page - 1))
     .sort({ createdAt: -1 });
   res.json({ streams, page, pages: Math.ceil(count / pageSize) });
+});
+
+//@desc : FETCH USER STREAMS
+//@route : GET /api/streams/:userHandler/user
+//@access : public access
+const getUserStreams = asyncHandler(async (req, res) => {
+  const pageSize = 100;
+  //const page = Number(req.query.pageNumber) || 1;
+  const page = 1;
+  const count = await Stream.countDocuments({});
+  const streams = await Stream.find({ userHandle: req.params.userHandler })
+    .populate("comments.user", "id name image nameHandler")
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+    .sort({ createdAt: -1 });
+  const selectedUser = await User.findOne({ nameHandler: req.params.userHandler });
+  res.json({ streams, selectedUser, page, pages: Math.ceil(count / pageSize) });
 });
 
 //@desc : FETCH STREAM COMMENTS
@@ -321,6 +337,7 @@ module.exports = {
   getTopRatedProducts: getTopRatedProducts,
   */
   getStreams: getStreams,
+  getUserStreams: getUserStreams,
   likeStream: likeStream,
   unlikeStream: unlikeStream,
   deleteStream: deleteStream,

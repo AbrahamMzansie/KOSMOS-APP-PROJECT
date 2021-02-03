@@ -21,8 +21,6 @@ const Home = ({ classes }) => {
     loading,
     error,
     streams,
-    page,
-    pages,
     loadingLike,
     loadingUnLike,
   } = streamList;

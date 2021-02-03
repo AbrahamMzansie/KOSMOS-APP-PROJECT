@@ -51,7 +51,7 @@ import {
 export const streamListReducer = (
   state = {
     streams: [],
-
+    selectedUser : {},
     stream: {},
     streamStreamDetails: {},
     streamCreateComment: {},
@@ -70,6 +70,7 @@ export const streamListReducer = (
       return {
         loading: false,
         streams: action.payload.streams,
+        selectedUser : action.payload.selectedUser,
         pages: action.payload.pages,
         page: action.payload.page,
       };

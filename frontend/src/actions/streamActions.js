@@ -42,6 +42,24 @@ export const listStreams = () => async (dispatch, getState) => {
   }
 };
 
+
+export const listUserStreams = (userHandler) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: STREAM_LIST_REQUEST });
+    const { data } = await axios.get(`/api/streams/${userHandler}/user`);
+    console.log(data);
+    dispatch({ type: STREAM_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: STREAM_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const likeStream = (streamID, index) => async (dispatch, getState) => {
   const currentItem = { index };
   try {
