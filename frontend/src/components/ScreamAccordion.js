@@ -29,10 +29,10 @@ const ScreamAccordion = ({ stream, index, classes }) => {
           id="panel1a-header"
         >
           <Typography
-            className={classes.accordion}
+            
             color="primary"
             variant="h5"
-            className={classes.heading}
+            className={classes.accordion}
           >
             Comment Details
           </Typography>

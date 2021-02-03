@@ -8,8 +8,44 @@ const likeSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const notificationSchema = mongoose.Schema(
+  {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
+      type: String,
+    },
+    recipient: {
+      type: String,
+      required: true,
+    },
+    sender: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    read: {
+      type: false,
+      default: false,
+    },
+    screamId: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 const userSchema = mongoose.Schema(
   {
+    notifications : [notificationSchema],
     likes: [likeSchema],
     nameHandler: {
       type: String,

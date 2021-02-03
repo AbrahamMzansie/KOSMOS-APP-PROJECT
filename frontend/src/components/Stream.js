@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
@@ -13,7 +13,6 @@ import DeleteScream from "./DeleteScream";
 import CommentForm from "./CommentForm";
 import ScreamAccordion from "./ScreamAccordion";
 import MuiAlert from "@material-ui/lab/Alert";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Progress from "./Progress";
 
 const styles = {
