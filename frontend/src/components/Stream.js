@@ -15,6 +15,7 @@ import ScreamAccordion from "./ScreamAccordion";
 import MuiAlert from "@material-ui/lab/Alert";
 import Progress from "./Progress";
 
+
 const styles = {
   card: {
     display: "flex-wrap",
@@ -37,6 +38,7 @@ const styles = {
     resize: "vertical",
     overflow: "auto",
   },
+  
 };
 dayjs.extend(relativeTime);
 const Stream = ({ stream, index, classes }) => {

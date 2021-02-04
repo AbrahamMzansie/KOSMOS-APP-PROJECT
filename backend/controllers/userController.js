@@ -16,6 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
+      notifications: user.notifications,
     });
   } else {
     res.status(401);
@@ -29,6 +30,11 @@ const authUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { nameHandler, email, password } = req.body;
   const userExist = await User.findOne({ email: email });
+  const userName = await User.findOne({ nameHandler: nameHandler });
+  if(userName){
+    res.status(400);
+    throw new Error(`User with name ${nameHandler} already exist`); 
+  };
   if (userExist) {
     res.status(400);
     throw new Error(`User with email ${email} already exist`);
@@ -58,21 +64,10 @@ const registerUser = asyncHandler(async (req, res) => {
 //@access : private
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).
+  populate("notifications.sender", "nameHandler");
   if (user) {
     res.json(user);
-    //   {
-    /*
-      _id: user._id,
-      nameHandler: user.nameHandler,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      image: user.image,
-      website: user.website,
-      bio: user.bio,
-      location: user.location,
-      */
-    // });
   } else {
     res.status(404);
     throw new Error("User not found");

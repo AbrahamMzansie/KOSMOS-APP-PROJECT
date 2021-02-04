@@ -12,11 +12,20 @@ const getStreams = asyncHandler(async (req, res) => {
 
   const count = await Stream.countDocuments({});
   const streams = await Stream.find({})
-
     .populate("comments.user", "id name image nameHandler")
     .limit(pageSize)
     .skip(pageSize * (page - 1))
     .sort({ createdAt: -1 });
+
+  for (const i in streams) {
+    const name = streams[i].userHandle;
+    const user = await User.findOne(
+      { nameHandler: name },
+      { image: 1, _id: 0 }
+    );
+    console.log(user);
+    streams[i].image = user.image;
+  }
   res.json({ streams, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -33,7 +42,9 @@ const getUserStreams = asyncHandler(async (req, res) => {
     .limit(pageSize)
     .skip(pageSize * (page - 1))
     .sort({ createdAt: -1 });
-  const selectedUser = await User.findOne({ nameHandler: req.params.userHandler });
+  const selectedUser = await User.findOne({
+    nameHandler: req.params.userHandler,
+  });
   res.json({ streams, selectedUser, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -67,6 +78,19 @@ const createComment = asyncHandler(async (req, res) => {
       "comments.user",
       "id name image nameHandler"
     );
+
+    //add notification
+    const notification = {
+      recipient: stream.userHandle,
+      sender: comment.user,
+      type: "Comment",
+      screamId: stream._id,
+      message: comment.body,
+    };
+    await User.updateOne(
+      { nameHandler: stream.userHandle },
+      { $push: { notifications: notification } }
+    );
     res.json({ updatedStream });
   } else {
     res.status(404);
@@ -97,6 +121,20 @@ const likeStream = asyncHandler(async (req, res) => {
       };
       await User.updateOne({ _id: user._id }, { $addToSet: { likes: like } });
       const updatedUser = await User.findById(user._id);
+
+      //add notification
+      const notification = {
+        recipient: stream.userHandle,
+        sender: user._id,
+        type: "like",
+        screamId: stream._id,
+        message: "like your post",
+      };
+      await User.updateOne(
+        { nameHandler: stream.userHandle },
+        { $push: { notifications: notification } }
+      );
+
       res.json({ updatedStream, updatedUser });
     } else {
       res.status(404);
@@ -130,6 +168,20 @@ const unlikeStream = asyncHandler(async (req, res) => {
         { $pull: { likes: { streamId: stream._id } } },
         { safe: true, upsert: true, useFindAndModify: false }
       );
+
+      //add notification
+      const notification = {
+        recipient: stream.userHandle,
+        sender: user._id,
+        type: "unlike",
+        screamId: stream._id,
+        message: "unlike your post",
+      };
+      await User.updateOne(
+        { nameHandler: stream.userHandle },
+        { $push: { notifications: notification } }
+      );
+
       const updatedUser = await User.findById(user._id);
       res.json({ updatedStream, updatedUser });
     } else {

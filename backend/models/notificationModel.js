@@ -26,8 +26,9 @@ const notificationSchema = mongoose.Schema(
       default: false,
     },
     screamId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "Stream",
     },
   },
   {

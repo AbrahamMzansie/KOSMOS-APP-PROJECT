@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../actions/userAction";
+
+import NotificationComponent from "./Notification";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/ToolBar";
@@ -8,13 +11,13 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import AddIcon from "@material-ui/icons/Add";
 import Notifications from "@material-ui/icons/Notifications";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import PostStream from "./PostStream";
 
 const styles = {
+  
   paper: {
     padding: 20,
   },
@@ -71,7 +74,7 @@ const styles = {
     },
   },
 };
-const notificationHandler = () => {};
+
 const Navbar = ({ classes }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userLogin);
@@ -116,18 +119,8 @@ const Navbar = ({ classes }) => {
         {userInfo ? (
           <>
             <PostStream />
-
-            <Tooltip title="New Notification" placement="top">
-              <IconButton
-                color="inherit"
-                onClick={notificationHandler}
-                className={classes.button}
-              >
-                <Notifications></Notifications>
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="click the  icon to logg off" placement="top">
+            <NotificationComponent />
+            <Tooltip title="click the  icon to log off" placement="top">
               <IconButton
                 component={Link}
                 to="/"

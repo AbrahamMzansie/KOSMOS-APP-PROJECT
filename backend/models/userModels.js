@@ -11,6 +11,9 @@ const likeSchema = mongoose.Schema(
 
 const notificationSchema = mongoose.Schema(
   {
+    message : {
+      type : String,
+    },
     loading: {
       type: Boolean,
       default: false,
@@ -23,8 +26,9 @@ const notificationSchema = mongoose.Schema(
       required: true,
     },
     sender: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "User",
     },
     type: {
       type: String,
@@ -35,8 +39,9 @@ const notificationSchema = mongoose.Schema(
       default: false,
     },
     screamId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "Stream",
     },
   },
   {

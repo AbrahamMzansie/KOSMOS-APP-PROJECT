@@ -14,16 +14,19 @@ const styles = {
     textAlign: "center",
   },
 };
+const styles1 = (theme) => ({
+  root: {
+    backgroundColor: "blue",
+
+    [theme.breakpoints.down("md")]: {
+      backgroundColor: "red",
+    },
+  },
+});
 const Home = ({ classes }) => {
   const dispatch = useDispatch();
   const streamList = useSelector((state) => state.streamList);
-  const {
-    loading,
-    error,
-    streams,
-    loadingLike,
-    loadingUnLike,
-  } = streamList;
+  const { loading, error, streams, loadingLike, loadingUnLike } = streamList;
   useEffect(() => {
     dispatch(listStreams());
   }, [dispatch]);
