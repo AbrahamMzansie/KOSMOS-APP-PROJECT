@@ -6,7 +6,8 @@ import NotificationComponent from "./Notification";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
-import ToolBar from "@material-ui/core/ToolBar";
+// import ToolBar from "@material-ui/core/ToolBar";
+import { ToolBar } from '@mui/material';
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
