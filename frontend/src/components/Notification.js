@@ -61,8 +61,11 @@ const Notification = ({ classes }) => {
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
-  console.log(user.notifications);
+  const { loading, error, user } = userDetails; 
+
+  const showPostHandler = (postId)=>{    
+
+  }
   return (
     <div>
       <Tooltip title="New Notification" placement="top">
@@ -130,6 +133,7 @@ const Notification = ({ classes }) => {
               </Typography>
               <div className={classes.notification}>
                 <Button
+                onClick={()=>showPostHandler(notify._id)}
                   className={classes.button}
                   color="primary"
                   type="submit"

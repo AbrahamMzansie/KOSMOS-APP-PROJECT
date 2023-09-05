@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import MuiAlert from "@material-ui/lab/Alert";
 
 const styles = {
   form: {
@@ -66,7 +67,7 @@ const Signin = ({ classes, location, history }) => {
         </Typography>
         {error && (
           <Typography variant="h4" className={classes.error}>
-            {error}
+          <MuiAlert severity="error">{error}</MuiAlert>
           </Typography>
         )}
         <form noValidate onSubmit={signInHandler} autoComplete="off">

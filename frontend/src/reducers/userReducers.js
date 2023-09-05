@@ -1,5 +1,4 @@
 import {
-  LIKE_STREAM_REQUEST,
   LIKE_STREAM_SUCCESS,
   UNLIKE_STREAM_SUCCESS,
 } from "../constants/streamConstants";

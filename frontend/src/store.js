@@ -3,7 +3,6 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
   streamListReducer,
-  streamDetailsReducer,
 } from "./reducers/streamReducers";
 import {
   productListReducer,

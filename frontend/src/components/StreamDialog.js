@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { useDispatch, useSelector } from "react-redux";
-import Avatar from "@material-ui/core/Avatar";
-import { streamDetails, createComment } from "../actions/streamActions";
+import { streamDetails } from "../actions/streamActions";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -13,7 +12,6 @@ import StreamFooter from "./StreamFooter";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import Progress from "../components/Progress";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -21,41 +19,9 @@ import { STREAM_DETAILS_RESET } from "../constants/streamConstants";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
 import { Typography } from "@material-ui/core";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Comments from "./Comments";
 import ScreamAccordion from "./ScreamAccordion";
 
-const styles = {
-  visibleSeparator: {
-    width: "100%",
-    borderBottom: "1px solid rgba(0,0,0,0.1)",
-    marginBottom: "20px",
-  },
-  image: {
-    marginTop: "10px",
-    width: "200px",
-    height: "200px",
-    objectFit: "cover",
-    maxWidth: "100%",
-    borderRadius: "50%",
-  },
-  dialogContent: {
-    padding: "20px",
-  },
-  invisibleSepator: {
-    border: "none",
-    margin: "4px",
-  },
-  expandButton: {
-    position: "absolute",
-    left: "90%",
-  },
-  body: {
-    height: "100px",
-    maxHeight: "400px",
-    resize: "vertical",
-    overflow: "auto",
-  },
-};
+
 dayjs.extend(relativeTime);
 const SreamDialog = ({ streamData, classes, userHandler}) => {
   const [open, setOpen] = useState(false);
@@ -64,14 +30,9 @@ const SreamDialog = ({ streamData, classes, userHandler}) => {
   const dispatch = useDispatch();
   const streamDetailData = useSelector((state) => state.streamList);
   const {
-    loadingCreateComment,
     loadingStreamDetails,
     errorStreamDetails,
-    errorCreateComment,
-    streamStreamDetails,
     streams,
-    page,
-    pages,
   } = streamDetailData;
 
   const loading = loadingStreamDetails;
@@ -179,6 +140,39 @@ const SreamDialog = ({ streamData, classes, userHandler}) => {
       </Dialog>
     </>
   );
+};
+
+const styles = {
+  visibleSeparator: {
+    width: "100%",
+    borderBottom: "1px solid rgba(0,0,0,0.1)",
+    marginBottom: "20px",
+  },
+  image: {
+    marginTop: "10px",
+    width: "200px",
+    height: "200px",
+    objectFit: "cover",
+    maxWidth: "100%",
+    borderRadius: "50%",
+  },
+  dialogContent: {
+    padding: "20px",
+  },
+  invisibleSepator: {
+    border: "none",
+    margin: "4px",
+  },
+  expandButton: {
+    position: "absolute",
+    left: "90%",
+  },
+  body: {
+    height: "100px",
+    maxHeight: "400px",
+    resize: "vertical",
+    overflow: "auto",
+  },
 };
 
 export default withStyles(styles)(SreamDialog);

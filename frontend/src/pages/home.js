@@ -14,15 +14,6 @@ const styles = {
     textAlign: "center",
   },
 };
-const styles1 = (theme) => ({
-  root: {
-    backgroundColor: "blue",
-
-    [theme.breakpoints.down("md")]: {
-      backgroundColor: "red",
-    },
-  },
-});
 const Home = ({ classes }) => {
   const dispatch = useDispatch();
   const streamList = useSelector((state) => state.streamList);
@@ -35,17 +26,17 @@ const Home = ({ classes }) => {
     <>
       {loading ? (
         <Progress className={classes.progress} size={100}></Progress>
-      ) : (
+      ): (
         <>
           <Grid style={{ marginTop: "50px" }} container spacing={10}>
             <Grid item sm={8} xs={12}>
-              {!streams && streams.length === 0 ? (
+              {streams&& streams.length===0 ? (
                 <MuiAlert severity="info">Post main page is empty</MuiAlert>
               ) : null}
               {loading ? (
                 <Progress size={100}></Progress>
               ) : error ? (
-                <MuiAlert severity="error">{error}</MuiAlert>
+                <MuiAlert severity="error">Something went wrong ,  {error}</MuiAlert>
               ) : (
                 streams &&
                 streams.map((stream, index) => (
@@ -59,7 +50,7 @@ const Home = ({ classes }) => {
                 ))
               )}
 
-              {streams.length === 0 && (
+              {streams && streams.length === 0 && (
                 <MuiAlert severity="info">Post main page is empty</MuiAlert>
               )}
             </Grid>

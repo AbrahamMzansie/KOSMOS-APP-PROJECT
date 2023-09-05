@@ -44,7 +44,7 @@ const SignUp = ({ classes, location, history }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [nameHandler, setNameHandler] = useState("");
-  const [message , setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const registerData = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = registerData;
@@ -59,8 +59,9 @@ const SignUp = ({ classes, location, history }) => {
   }, [history, redirect, userInfo, dispatch]);
   const registerHandler = (e) => {
     e.preventDefault();
+    setMessage("");
     if (password !== confirmPassword) {
-      setMessage("Password do not match!")
+      setMessage("Password do not match!");
     } else {
       dispatch(userRegister(nameHandler, email, password));
     }
@@ -74,15 +75,15 @@ const SignUp = ({ classes, location, history }) => {
         <Typography variant="h4" className={classes.pageTitle}>
           Sign Up
         </Typography>
-        {message &&(<MuiAlert severity="error">{message}</MuiAlert>)}
+        {message && <MuiAlert severity="error">{message}</MuiAlert>}
         {error && (
           <Typography variant="h4" className={classes.error}>
-            {error}
+            <MuiAlert severity="error">{error}</MuiAlert>
           </Typography>
         )}
         <form noValidate onSubmit={registerHandler} autoComplete="off">
           <TextField
-          required
+            required
             id="email"
             type="email"
             name="email"
