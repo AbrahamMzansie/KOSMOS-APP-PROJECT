@@ -7,7 +7,7 @@ import NotificationComponent from "./Notification";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 // import ToolBar from "@material-ui/core/ToolBar";
-import { ToolBar } from '@mui/material';
+import { Toolbar } from '@material-ui/core';
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
@@ -85,7 +85,7 @@ const Navbar = ({ classes }) => {
   };
   return (
     <AppBar>
-      <ToolBar user={userInfo} className="nav-container">
+      <Toolbar user={userInfo} className="nav-container">
         <div
           style={{
             backgroundColor: "white",
@@ -143,7 +143,7 @@ const Navbar = ({ classes }) => {
             </Button>
           </>
         )}
-      </ToolBar>
+      </Toolbar>
     </AppBar>
   );
 };
