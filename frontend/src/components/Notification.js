@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Notifications from "@material-ui/icons/Notifications";
+import { Box } from "@material-ui/core";
 
 const styles = {
   paper: {
@@ -61,11 +62,9 @@ const Notification = ({ classes }) => {
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails; 
-
-  const showPostHandler = (postId)=>{    
-
-  }
+  const { loading, error, user } = userDetails;
+  // console.log(user.notifications);
+  const showPostHandler = (postId) => {};
   return (
     <div>
       <Tooltip title="New Notification" placement="top">
@@ -106,6 +105,7 @@ const Notification = ({ classes }) => {
         {user &&
           user.notifications &&
           user.notifications.map((notify) => (
+            <Tooltip title={notify.message} placement="bottom">
             <MenuItem
               key={notify._id}
               onClick={handleClose}
@@ -120,20 +120,43 @@ const Notification = ({ classes }) => {
                   {notify.type === "Comment" && (
                     <span>commented on your post</span>
                   )}
-                  {notify.type === "unlike" && (
-                    <span>unlike your post</span>
-                  )}
-                  {notify.type === "like" && (
-                    <span>like your post</span>
-                  )}
+                  {notify.type === "unlike" && <span>unlike your post</span>}
+                  {notify.type === "like" && <span>like your post</span>}
                 </div>
               </div>
-              <Typography variant="body2" color="textSecondary">
+
+              <Box style={{
+                   overflow: "auto",
+                  overflowX: "scroll",
+                  wordWrap: 'break-word',
+                   overflowWrap: "anywhere",
+                  textOverflow: "ellipsis",
+                  width: "22rem",
+                }} component="div" whiteSpace="normal">
+              {notify.message}
+              </Box>
+
+              {/* <div
+                style={{
+                  //  overflow: "auto",
+                    overflowX: "scroll",
+                  wordWrap: 'break-word',
+                   overflowWrap: "anywhere",
+                  textOverflow: "ellipsis",
+                  width: "15rem",
+                }}
+              >
+                <Typography variant="body2" color="textSecondary">
+                  {notify.message}
+                </Typography>
+              </div> */}
+              <Typography noWrap variant="body2" color="textSecondary">
                 {dayjs(notify.createdAt).fromNow()}
               </Typography>
+
               <div className={classes.notification}>
                 <Button
-                onClick={()=>showPostHandler(notify._id)}
+                  onClick={() => showPostHandler(notify._id)}
                   className={classes.button}
                   color="primary"
                   type="submit"
@@ -144,6 +167,7 @@ const Notification = ({ classes }) => {
                 <hr />
               </div>
             </MenuItem>
+            </Tooltip>
           ))}
       </Menu>
     </div>

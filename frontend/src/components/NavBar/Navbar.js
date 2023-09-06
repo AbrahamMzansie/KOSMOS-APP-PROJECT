@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../actions/userAction";
+import { userLogout } from "../../actions/userAction";
 
-import NotificationComponent from "./Notification";
+import NotificationComponent from "../Notification";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
@@ -15,15 +15,18 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Notifications from "@material-ui/icons/Notifications";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import PostStream from "./PostStream";
+import PostStream from "../PostStream";
+import "./NavBar.css";
 
 const styles = {
   
   paper: {
     padding: 20,
   },
+ 
+  
   profile: {
-    /*
+    
     "& .image-wrapper": {
       textAlign: "left",
       position: "relative",
@@ -66,7 +69,7 @@ const styles = {
         cursor: "pointer",
       },
     },
-    */
+    
   },
   buttons: {
     textAlign: "center",
@@ -84,8 +87,8 @@ const Navbar = ({ classes }) => {
     dispatch(userLogout());
   };
   return (
-    <AppBar>
-      <Toolbar user={userInfo} className="nav-container">
+    <AppBar className="appBar">
+      <Toolbar user={userInfo}>
         <div
           style={{
             backgroundColor: "white",
@@ -114,8 +117,21 @@ const Navbar = ({ classes }) => {
             alt="profile picture"
           ></img>
         </div>
-        <IconButton color="inherit" component={Link} to="/">
+        <IconButton className="navBar__icon" color="inherit" component={Link} to="/">
           <HomeIcon />
+          <span>Home</span>
+        </IconButton>
+        <IconButton className="navBar__icon" color="inherit" component={Link} to="/my-network">
+          <HomeIcon />
+          <span>My Network</span>
+        </IconButton>
+        <IconButton className="navBar__icon" color="inherit" component={Link} to="/jobs">
+          <HomeIcon />
+          <span>Jobs</span>
+        </IconButton>
+        <IconButton className="navBar__icon" color="inherit" component={Link} to="/messaging">
+          <HomeIcon />
+          <span>Messaging</span>
         </IconButton>
         {userInfo ? (
           <>
@@ -127,7 +143,7 @@ const Navbar = ({ classes }) => {
                 to="/"
                 color="inherit"
                 onClick={userLogoutHandler}
-                className={classes.button}
+                className={`#{classes.button} navBar__icon`}
               >
                 <ExitToAppIcon />
               </IconButton>

@@ -56,9 +56,11 @@ const PostStream = (classes) => {
         <IconButton
           color="inherit"
           onClick={openHandler}
-          className={classes.button}
+          className={`${classes.button} navBar__icon`}
         >
           <AddIcon></AddIcon>
+          <span>Add Post</span>
+        
         </IconButton>
       </Tooltip>
 
